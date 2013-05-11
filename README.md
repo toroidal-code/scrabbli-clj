@@ -1,6 +1,6 @@
 # Scrabbli in Clojure
 
-This is the [Clojure](http://clojure.org) implementation of Scrabbli, a simple scrabble board tool solver. 
+This is the [Clojure](http://clojure.org) implementation of Scrabbli, a ~simple~ scrabble board tool solver.
 
 ## Installation
 
