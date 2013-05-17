@@ -45,7 +45,7 @@ public class Test {
             String nextLine = scan.next();
             if (nextLine.equals("r")){
                 String rack = scan.next();
-                System.out.println(g.findWordsWithRackAndHook(toCharacterArray(rack.toUpperCase()), hook));
+                //System.out.println(g.findWordsWithRackAndHook(toCharacterArray(rack.toUpperCase()), new Tile(hook)));
             }
             else if (nextLine.equals("h")){
                 hook = scan.next().toUpperCase().charAt(0);

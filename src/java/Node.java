@@ -1,23 +1,18 @@
 import java.util.Collection;
-import java.util.TreeMap;
+import java.util.HashMap;
 
-public class Node implements Comparable<Node>{
+public class Node extends Tile{
     public static char root = '~';
-    private char content;
     private boolean finite = false;
-    public TreeMap<Character, Node> children = new TreeMap<>();
+    private HashMap<Character, Node> children = new HashMap<>();
 
-    public char getContent (){ return content; }
     public void setFinite(boolean value){ finite = value; }
     public boolean getFinite(){ return finite; }
 
     public Node(char c){
         this.content = c;
+        this.value = Tile.tileValueMap.get(c);
         this.finite = false;
-    }
-
-    public Collection<Character> getKeys(){
-        return children.keySet();
     }
 
     /**
@@ -29,47 +24,28 @@ public class Node implements Comparable<Node>{
     }
 
     /**
-     * Does this node have a child with the contents c2?
-     * @param c2 the content to check
-     * @return true if child list contains such child
+     * Does this node have a child that matches a tile?
+     * @param tile the tile to check
+     * @return true if child list contains such Node
      */
-    public boolean hasChild(char c2) {
-        return children.containsKey(c2);
+    public boolean hasChild(Tile tile) {
+        return children.containsKey(tile.getContent());
     }
 
     /**
      * return the child that corresponds to the content c2
-     * @param c the character to check against
+     * @param tile the character to check against
      * @return a Node or null
      */
-    public Node getChild(char c){
-        return children.get(c);
+    public Node getChild(Tile tile){
+        return children.get(tile.getContent());
     }
 
     /**
-     * Add a child to our Map of child nodes
-     * @param c2 the character to add
+     * Add a child to our Map of child Nodes
+     * @param c the character to add
      */
-    public void addChild(char c2){
-        children.put(c2, new Node(c2));
-    }
-
-    /**
-     * A basic toString, only returns our contents
-     * @return the character the node holds
-     */
-    @Override
-    public String toString(){
-        return String.valueOf(content);
-    }
-
-    @Override
-    public boolean equals(Object o){
-        return o instanceof Node && content == ((Node) o).getContent();
-    }
-
-    @Override
-    public int compareTo(Node o) {
-        return content - o.content;
+    public void addChild(char c){
+        children.put(c, new Node(c));
     }
 }

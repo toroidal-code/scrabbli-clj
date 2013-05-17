@@ -10,11 +10,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Leiningen: clojure-lanterna:clojure-lanterna:0.9.3" level="project" />
+    <orderEntry type="library" name="Leiningen: com.googlecode.lanterna:lanterna:2.1.5" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure:clojure:1.5.1" level="project" />
-    <orderEntry type="library" name="Leiningen: com.googlecode.lanterna:lanterna:2.1.1" level="project" />
   </component>
 </module>
 
