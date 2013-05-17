@@ -12,6 +12,6 @@ Right now there is no jar, as there is not even a working program.
 
 ## License
 
-Copyright © 2012,2013 Katherine Whitlock
+Copyright © 2012,2013 Katherine Whitlock, Zachary Elliott
 
 Distributed under MIT License. See LICENSE for more details.

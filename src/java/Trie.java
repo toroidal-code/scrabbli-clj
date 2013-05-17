@@ -33,7 +33,7 @@ public class Trie {
      */
     public void add(String word){
         if (word.length() == 0) return;
-        char[] characters = word.toUpperCase().toCharArray();
+        char[] characters = word.toLowerCase().toCharArray();
         Node current = this.root;
 
         for (char character : characters)
@@ -59,7 +59,7 @@ public class Trie {
      * @return boolean whether we've got it or not
      */
     public boolean contains(String word){
-        char[] characters = word.toUpperCase().toCharArray();
+        char[] characters = word.toLowerCase().toCharArray();
         Node tmp = root;
 
         for (char character : characters)

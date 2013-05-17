@@ -15,23 +15,21 @@ public class Test {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1){
-            System.out.println("Please enter a dictionary file when executing");
-            System.exit(-1);
-        }
-
         GADDAG g = new GADDAG(); // change to trie to see a trie.
-        //g.addAll(new String[]{"Abstract", "Absolute", "Absolve", "Butts", "Boats", "Bannana", "Abs"});
         long startTime = System.nanoTime();
 
-        Scanner dictionary = new Scanner(new File(args[0]));
-        while(dictionary.hasNext()) {
-            g.add(dictionary.nextLine());
+        if (args.length == 1){
+            Scanner dictionary = new Scanner(new File(args[0]));
+            while(dictionary.hasNext()) {
+                g.add(dictionary.nextLine());
+            }
+            long duration = System.nanoTime() - startTime;
+            System.out.println("Time to build GADDAG: " + duration/1000000000. + " seconds");
+            repl(g);
+        } else {
+            g.addAll(new String[]{"Abstract", "Absolute", "Absolve", "Boats", "Bannana", "Abs"});
+            repl(g);
         }
-
-        long duration = System.nanoTime() - startTime;
-        System.out.println("Time to build GADDAG: " + duration/1000000000. + " seconds");
-        repl(g);
     }
 
     public static void repl(GADDAG g){
@@ -45,7 +43,7 @@ public class Test {
             String nextLine = scan.next();
             if (nextLine.equals("r")){
                 String rack = scan.next();
-                //System.out.println(g.findWordsWithRackAndHook(toCharacterArray(rack.toUpperCase()), new Tile(hook)));
+                System.out.println(g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), new Tile(hook)));
             }
             else if (nextLine.equals("h")){
                 hook = scan.next().toUpperCase().charAt(0);

@@ -19,13 +19,17 @@ public class Tile implements Comparable<Tile> {
         content = c;
         if (blank)
             value = 0;
-        else
+        else if (tileValueMap.containsKey(c))
             value = tileValueMap.get(c);
+        else
+            value = 0;
     }
 
     public Tile(char c){
         content = c;
-        value = tileValueMap.get(c);
+        if (tileValueMap.containsKey(c))
+            value = tileValueMap.get(c);
+        else value = 0;
     }
 
     public char getContent(){

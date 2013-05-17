@@ -10,10 +10,20 @@ public class Node extends Tile{
     public boolean getFinite(){ return finite; }
 
     public Node(char c){
-        this.content = c;
-        this.value = Tile.tileValueMap.get(c);
+        super(c);
         this.finite = false;
     }
+
+    public Node(char c, boolean noValue){
+        super(c, noValue);
+        this.finite = false;
+    }
+
+    public Node(Tile t){
+        super(t.content, (t.value == 0));
+        this.finite = false;
+    }
+
 
     /**
      * Get our child nodes from our Map
@@ -33,6 +43,15 @@ public class Node extends Tile{
     }
 
     /**
+     * Does this node have a child that matches a character?
+     * @param c the character to check
+     * @return true if child list contains such Node
+     */
+    public boolean hasChild(char c) {
+        return children.containsKey(c);
+    }
+
+    /**
      * return the child that corresponds to the content c2
      * @param tile the character to check against
      * @return a Node or null
@@ -42,10 +61,22 @@ public class Node extends Tile{
     }
 
     /**
+     * return the child that corresponds to the content c
+     * @param c the character to check against
+     * @return a Node or null
+     */
+    public Node getChild(char c){
+        return children.get(c);
+    }
+
+    /**
      * Add a child to our Map of child Nodes
      * @param c the character to add
      */
     public void addChild(char c){
-        children.put(c, new Node(c));
+        if (c == GADDAG.separator) // if we're a separator node, let's use our GADDAG's separatorTile
+            children.put(c, new Node(GADDAG.separatorTile));
+        else
+            children.put(c, new Node(c));
     }
 }

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class WordPlay {
+public class WordPlay implements Cloneable {
     private Tile hook;
     private ArrayList<Tile> wordRight = new ArrayList<>();
     private ArrayList<Tile> wordLeft = new ArrayList<>();
@@ -9,18 +9,21 @@ public class WordPlay {
         this.hook = hook;
     }
 
-    public WordPlay(WordPlay wp){
-        this.hook = wp.hook;
-        this.wordLeft = wp.wordLeft;
-        this.wordRight = wp.wordRight;
+    public Object clone(){
+        WordPlay wp = new WordPlay(this.hook);
+        wp.wordLeft = this.wordLeft;
+        wp.wordRight = this.wordRight;
+        return wp;
     }
 
     public void addRight(Tile t){
-        wordRight.add(t);
+        if (t.getContent() != GADDAG.separator) //We need to skip adding the separator to our WordPlay word
+            wordRight.add(t);
     }
 
     public void addLeft(Tile t){
-        wordLeft.add(t);
+        if (t.getContent() != GADDAG.separator) //We need to skip adding the separator to our WordPlay word
+            wordLeft.add(t);
     }
 
     /**
