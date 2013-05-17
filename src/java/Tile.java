@@ -46,13 +46,13 @@ public class Tile implements Comparable<Tile> {
 
     @Override
     public int compareTo(Tile t) {
-        return content - t.content;
+        return content - t.getContent();
     }
 
     /**
      * A hashCode for our Tile. Using value in addition to content allows
      * distinction between blanks and regular tiles
-     * @return
+     * @return an int representation of the object
      */
     @Override
     public int hashCode(){

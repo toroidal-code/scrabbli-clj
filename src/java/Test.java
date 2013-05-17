@@ -1,7 +1,10 @@
 import java.io.File;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Test {
+
+    private static final double nanosecondsToSeconds = 1000000000.;
 
     public static Character[] toCharacterArray(String s) {
         if (s == null) {
@@ -24,7 +27,7 @@ public class Test {
                 g.add(dictionary.nextLine());
             }
             long duration = System.nanoTime() - startTime;
-            System.out.println("Time to build GADDAG: " + duration/1000000000. + " seconds");
+            System.out.println("Time to build GADDAG: " + (duration / nanosecondsToSeconds) + " seconds"); //Nano seconds to seconds
             repl(g);
         } else {
             g.addAll(new String[]{"Abstract", "Absolute", "Absolve", "Boats", "Bannana", "Abs"});
@@ -43,10 +46,10 @@ public class Test {
             String nextLine = scan.next();
             if (nextLine.equals("r")){
                 String rack = scan.next();
-                System.out.println(g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), new Tile(hook)));
-            }
-            else if (nextLine.equals("h")){
-                hook = scan.next().toUpperCase().charAt(0);
+                TreeSet<WordPlay> wordsInAlpha = (TreeSet<WordPlay>)g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), new Tile(hook));
+                System.out.println( wordsInAlpha);
+            } else if (nextLine.equals("h")){
+                hook = scan.next().toLowerCase().charAt(0);
                 System.out.println("Hook is now: " + hook);
             }
             System.out.print("> ");

@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
-public class WordPlay implements Cloneable {
-    private Tile hook;
+@SuppressWarnings("MethodWithMultipleLoops")
+public class WordPlay implements Cloneable, Comparable<WordPlay> {
+    private final Tile hook;
     private ArrayList<Tile> wordRight = new ArrayList<>();
     private ArrayList<Tile> wordLeft = new ArrayList<>();
 
@@ -9,21 +10,30 @@ public class WordPlay implements Cloneable {
         this.hook = hook;
     }
 
+    public WordPlay(WordPlay wp){
+        hook = wp.hook;
+        for (Tile t : wp.wordLeft) {
+            this.wordLeft.add(t);
+        }
+        for (Tile t : wp.wordRight) {
+            this.wordRight.add(t);
+        }
+    }
+
     public Object clone(){
-        WordPlay wp = new WordPlay(this.hook);
-        wp.wordLeft = this.wordLeft;
-        wp.wordRight = this.wordRight;
-        return wp;
+        return new WordPlay(this);
     }
 
     public void addRight(Tile t){
-        if (t.getContent() != GADDAG.separator) //We need to skip adding the separator to our WordPlay word
+        if (t.getContent() != GADDAG.separator) { //We need to skip adding the separator to our WordPlay word
             wordRight.add(t);
+        }
     }
 
     public void addLeft(Tile t){
-        if (t.getContent() != GADDAG.separator) //We need to skip adding the separator to our WordPlay word
+        if (t.getContent() != GADDAG.separator) { //We need to skip adding the separator to our WordPlay word
             wordLeft.add(t);
+        }
     }
 
     /**
@@ -35,6 +45,10 @@ public class WordPlay implements Cloneable {
         for (Tile word : wordLeft) sum += word.getValue();
         for (Tile word : wordRight) sum += word.getValue();
         return sum;
+    }
+
+    public Tile getHook(){
+        return hook;
     }
 
     @Override
@@ -83,5 +97,10 @@ public class WordPlay implements Cloneable {
         for (int i = 0; i < wordRight.size(); i++)
             product *= wordRight.get(i).hashCode() + i;
         return product;
+    }
+
+    @Override
+    public int compareTo(WordPlay o) {
+        return this.toString().compareTo(o.toString());
     }
 }

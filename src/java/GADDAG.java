@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.TreeSet;
 
 public class GADDAG extends Trie {
     public static Tile separatorTile = new Tile('>', true);
@@ -54,8 +54,8 @@ public class GADDAG extends Trie {
         return rack;
     }
 
-    public HashSet<WordPlay> findWordsWithRackAndHook(ArrayList<Tile> rackList, Tile hook){
-        HashSet<WordPlay> words = new HashSet<>();
+    public TreeSet<WordPlay> findWordsWithRackAndHook(ArrayList<Tile> rackList, Tile hook){
+        TreeSet<WordPlay> words = new TreeSet<>();
         Collections.sort(rackList);
         WordPlay word = new WordPlay(hook);
 
@@ -64,26 +64,34 @@ public class GADDAG extends Trie {
             while (rackList.size() > 1){
                 tile = rackList.remove(0);
                 word = new WordPlay(tile);
-                findWordsRecurse(words, word,  rackList, tile, root, true);
+                findWordsRecurseCheckBlanks(words, word, rackList, tile);
             }
         } else {
-            findWordsRecurse(words, word, rackList, hook, root, true);
+            findWordsRecurseCheckBlanks(words, word, rackList, hook);
         }
         return words;
     }
 
-    private void findWordsRecurse(HashSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile next, Node cur, boolean direction){
-        if (rack.contains(new Tile('_'))) {
+    private void findWordsRecurseCheckBlanks(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile hook){
+        if (rack.contains(new Tile('_')) || hook.getContent() == '_') {
             char[] ch = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
             ArrayList<Tile> newRack;
+            WordPlay newWord;
             for (char c : ch){
                 newRack = (ArrayList<Tile>)rack.clone();
                 newRack.remove(new Tile('_', true)); //remove our '_' placeholder
-                newRack.add(new Tile(c, true)); //add a blank tile
-                findWordsRecurse(words, word, newRack, next, root, true);
+                Tile blank = new Tile(c, true);
+                if (hook.getContent() != '_') //if we don't already have a blank as our hook
+                    newRack.add(blank); //add the blank tile to our rack
+                newWord = (word.getHook().getContent() == '_') ? new WordPlay(blank) : new WordPlay(word); //don't have the last word object modified by our new state.
+                findWordsRecurse(words, newWord , newRack, (hook.getContent() == '_' ? blank : hook), root, true);
             }
+        } else {
+            findWordsRecurse(words, word, rack, hook, root, true);
         }
+    }
 
+    private void findWordsRecurse(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile next, Node cur, boolean direction){
         Node nextNode = cur.getChild(next); //grab the Node representation of our next Tile in our diving
 
         //Base case
@@ -91,23 +99,26 @@ public class GADDAG extends Trie {
             return;
 
         //The filtering to skip adding the separator to our WordPlay word is now done in WordPlay
-        if (direction)
-            word.addLeft(nextNode); //add in reverse
-        else
-            word.addRight(nextNode); //add forward
+        if (nextNode != root.getChild(nextNode)) // if we're not a hook (cause we're already in our WordPlay)
+            if (direction)
+                word.addLeft(nextNode); //add in reverse
+            else
+                word.addRight(nextNode); //add forward
 
         //if we've reached the end a word, add the word to output
         if (nextNode.getFinite())
             words.add(word);
 
+        WordPlay newWord ;
         for (Node node : nextNode.getChildren()) {
+            newWord = new WordPlay(word); //we need to not have the 'word' object filter up scope
             if (node.getContent() == separator)
-                findWordsRecurse(words, word, rack, node, nextNode, false);
+                findWordsRecurse(words, newWord, rack, node, nextNode, false);
             else if (rack.contains(node)){
                 //boolean duplicate = (rack.size() > 0 && (rack.get(nodeKey) == rack.get(rack.indexOf(nodeKey) - 1)));
                 ArrayList<Tile> newRack = (ArrayList<Tile>) rack.clone();
                 newRack.remove(new Tile(node.getContent()));
-                findWordsRecurse(words, word, newRack, node, nextNode, direction);
+                findWordsRecurse(words, newWord, newRack, node, nextNode, direction);
             }
         }
     }
