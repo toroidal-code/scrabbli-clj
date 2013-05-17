@@ -84,41 +84,40 @@ public class GADDAG extends Trie {
                 if (hook.getContent() != '_') //if we don't already have a blank as our hook
                     newRack.add(blank); //add the blank tile to our rack
                 newWord = (word.getHook().getContent() == '_') ? new WordPlay(blank) : new WordPlay(word); //don't have the last word object modified by our new state.
-                findWordsRecurse(words, newWord , newRack, (hook.getContent() == '_' ? blank : hook), root, true);
+                findWordsRecurse(words, newWord , newRack, root.getChild(hook.getContent() == '_' ? blank : hook), true);
             }
         } else {
-            findWordsRecurse(words, word, rack, hook, root, true);
+            findWordsRecurse(words, word, rack, root.getChild(hook), true);
         }
     }
 
-    private void findWordsRecurse(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile next, Node cur, boolean direction){
-        Node nextNode = cur.getChild(next); //grab the Node representation of our next Tile in our diving
+    private void findWordsRecurse(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Node cur, boolean direction){
 
         //Base case
-        if (nextNode == null)
+        if (cur == null)
             return;
 
         //The filtering to skip adding the separator to our WordPlay word is now done in WordPlay
-        if (nextNode != root.getChild(nextNode)) // if we're not a hook (cause we're already in our WordPlay)
+        if (cur != root.getChild(cur)) // if we're not a hook (cause we're already in our WordPlay)
             if (direction)
-                word.addLeft(nextNode); //add in reverse
+                word.addLeft(cur); //add in reverse
             else
-                word.addRight(nextNode); //add forward
+                word.addRight(cur); //add forward
 
         //if we've reached the end a word, add the word to output
-        if (nextNode.getFinite())
+        if (cur.getFinite())
             words.add(word);
 
         WordPlay newWord ;
-        for (Node node : nextNode.getChildren()) {
+        for (Node node : cur.getChildren()) {
             newWord = new WordPlay(word); //we need to not have the 'word' object filter up scope
             if (node.getContent() == separator)
-                findWordsRecurse(words, newWord, rack, node, nextNode, false);
+                findWordsRecurse(words, newWord, rack, cur.getChild(node), false);
             else if (rack.contains(node)){
                 //boolean duplicate = (rack.size() > 0 && (rack.get(nodeKey) == rack.get(rack.indexOf(nodeKey) - 1)));
                 ArrayList<Tile> newRack = (ArrayList<Tile>) rack.clone();
                 newRack.remove(new Tile(node.getContent()));
-                findWordsRecurse(words, newWord, newRack, node, nextNode, direction);
+                findWordsRecurse(words, newWord, newRack, cur.getChild(node), direction);
             }
         }
     }
