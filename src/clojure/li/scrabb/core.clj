@@ -1,5 +1,8 @@
-(ns scrabbli-clj.core
-  (:gen-class))
+
+
+(ns li.scrabb.core
+  (:gen-class :main true))
+
 
 (defn -main
   "I don't do a whole lot ... yet."

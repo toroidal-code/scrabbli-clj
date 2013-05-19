@@ -1,5 +1,7 @@
 
-(ns scrabbli-clj.maps)
+
+(ns li.scrabb.maps)
+
 
 ; 0 points: blank *2
 ; 1 point: E *12, A *9, I *9, O *8, N *6, R *6, T *6, L *4, S *4, U *4

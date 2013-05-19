@@ -1,4 +1,6 @@
-(defproject scrabbli-clj "0.1.0-SNAPSHOT"
+
+
+(defproject scrabbli-clj "0.1.0"
   :description "A Clojure-based scrabble solver"
   :url "www.scrabb.li"
   :license {:name "MIT License"
