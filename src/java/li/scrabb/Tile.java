@@ -15,28 +15,27 @@ public class Tile implements Comparable<Tile> {
     }
 
 
-    @Implements
     public int compareTo(Tile tile) {
-        return this.content - tile.getContent();
+        return this.label - tile.getLabel();
     }
-
 
     public boolean equals(Object object){
         return object instanceof Tile &&
-            this.label == ((Tile)o).getLabel();
+            this.label == ((Tile)object).getLabel();
     }
 
     public int hashCode(){
-        return this.content * this.value + 1;
+        return this.label * this.value + 1;
     }
 
     public String toString(){
-        return String.valueOf(this.content);
+        return String.valueOf(this.label);
     }
 
     public int getValue() {
         return this.value;
     }
+
     public char getLabel() {
         return this.label;
     }
