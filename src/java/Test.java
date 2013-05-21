@@ -1,24 +1,15 @@
+import li.scrabb.Tile;
+
 import java.io.File;
 import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.Set;
 
 public class Test {
 
     private static final double nanosecondsToSeconds = 1000000000.;
 
-    public static Character[] toCharacterArray(String s) {
-        if (s == null) {
-            return null;
-        }
-        Character[] array = new Character[s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            array[i] = s.charAt(i);
-        }
-        return array;
-    }
-
     public static void main(String[] args) throws Exception {
-        GADDAG g = new GADDAG(); // change to trie to see a trie.
+        GADDAG g = new GADDAG();
         long startTime = System.nanoTime();
 
         if (args.length == 1){
@@ -27,7 +18,7 @@ public class Test {
                 g.add(dictionary.nextLine());
             }
             long duration = System.nanoTime() - startTime;
-            System.out.println("Time to build GADDAG: " + (duration / nanosecondsToSeconds) + " seconds"); //Nano seconds to seconds
+            System.out.println("Time to build GADDAG: " + duration / nanosecondsToSeconds + " seconds"); //Nano seconds to seconds
             repl(g);
         } else {
             g.addAll(new String[]{"Abstract", "Absolute", "Absolve", "Boats", "Bannana", "Abs"});
@@ -41,16 +32,16 @@ public class Test {
         System.out.println("Use 'h' followed by a character to change the hook.");
         Scanner scan = new Scanner(System.in);
         System.out.print("> ");
-        char hook = ' ';
+        Tile hookTile = new Tile(' ');
         while(scan.hasNext()){
             String nextLine = scan.next();
             if (nextLine.equals("r")){
                 String rack = scan.next();
-                TreeSet<WordPlay> wordsInAlpha = (TreeSet<WordPlay>)g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), new Tile(hook));
+                Set<WordPlay> wordsInAlpha = g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), hookTile);
                 System.out.println( wordsInAlpha);
             } else if (nextLine.equals("h")){
-                hook = scan.next().toLowerCase().charAt(0);
-                System.out.println("Hook is now: " + hook);
+                hookTile = new Tile(scan.next().toLowerCase().charAt(0));
+                System.out.println("Hook is now: " + hookTile.getValue());
             }
             System.out.print("> ");
         }

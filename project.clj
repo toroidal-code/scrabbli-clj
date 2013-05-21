@@ -6,7 +6,8 @@
   :license {:name "MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [com.googlecode.lanterna/lanterna "2.1.5"]]
+                 [com.googlecode.lanterna/lanterna "2.1.5"]
+                 [junit/junit "4.11"]]
   :main scrabbli-clj.core
   :min-lein-version "2.0.0"
   :source-paths      ["src/clojure"]
