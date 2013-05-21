@@ -102,6 +102,7 @@ public class Trie {
 
         return words;
     }
+
     private void getWords(String word, Node current, ArrayList<String> words) {
         if (current.getTerminal())
             words.add(word);

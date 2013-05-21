@@ -8,14 +8,10 @@ import static org.hamcrest.CoreMatchers.*;
 public class GADDAGTest {
     private GADDAG gaddag = new GADDAG();
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
     @Test
     public void testAdd() throws Exception {
-        gaddag.add("abs");
         assertEquals(gaddag.getRoot(), new Node('~'));
+        gaddag.add("abs");
         Node node = gaddag.getRoot();
         assertThat(node.getChildren().keySet(), hasItems('a', 'b', 's'));
     }

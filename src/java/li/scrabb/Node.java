@@ -120,4 +120,12 @@ public class Node extends Tile {
     public Collection<Node> getChildValues() {
         return this.children.values();
     }
+
+    @Override
+    public boolean equals(Object o){
+        return o instanceof Node &&
+                this.terminal == ((Node)o).terminal &&
+                this.children.equals(((Node)o).children);
+
+    }
 }
