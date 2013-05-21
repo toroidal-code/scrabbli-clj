@@ -49,10 +49,16 @@ public class WordRepl {
                     System.out.println("Hook is now: " + hookTile.getLabel());
                     break;
                 case "c":
-                    if (scan.next().equals("a"))
-                        comp = WordPlay.alphaComparator();
-                    else if (scan.next().equals("s"))
-                        comp = WordPlay.scoreComparator();
+                    switch (scan.next()){
+                        case "a":
+                            comp = WordPlay.alphaComparator();
+                            System.out.println("Alphabetical order");
+                            break;
+                        case "s":
+                            comp = WordPlay.scoreComparator();
+                            System.out.println("Score order");
+                            break;
+                    }
                     break;
             }
             System.out.print("> ");

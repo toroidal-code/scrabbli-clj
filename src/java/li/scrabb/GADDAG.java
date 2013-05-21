@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GADDAG extends Trie {
-    public static Tile separatorTile = new Tile('>');
     public static char separator = '>';
 
     public GADDAG(){ root = new Node('~'); }
@@ -21,7 +20,6 @@ public class GADDAG extends Trie {
         if (word.length() != 0) {
             word = word.toLowerCase();
 
-            String prefix;
             char[] ch;
             int i;
             for (i = 1; i < word.length(); i++) {
@@ -97,12 +95,12 @@ public class GADDAG extends Trie {
             ArrayList<Tile> newRack;
             WordPlay newWord;
             for (char c : ch){
-                newRack = (ArrayList<Tile>)rack.clone();
+                newRack = new ArrayList<>(rack);
                 newRack.remove(new Tile('_', true)); //remove our '_' placeholder
                 Tile blank = new Tile(c, true);
                 if (hook.getLabel() != '_') //if we don't already have a blank as our hook
                     newRack.add(blank); //add the blank tile to our rack
-                newWord = (word.getHook().getLabel() == '_') ? new WordPlay(blank) : new WordPlay(word); //don't have the last word object modified by our new state.
+                newWord = word.getHook().getLabel() == '_' ? new WordPlay(blank) : new WordPlay(word); //don't have the last word object modified by our new state.
                 findWordsRecurse(words, newWord , newRack, root.getChild(hook.getLabel() == '_' ? blank : hook), true);
             }
         } else {
@@ -132,9 +130,9 @@ public class GADDAG extends Trie {
             newWord = new WordPlay(word); //we need to not have the 'word' object filter up scope
             if (node.getLabel() == separator)
                 findWordsRecurse(words, newWord, rack, cur.getChild(node), false);
-            else if (rack.contains((Tile)node)){
+            else if (rack.contains(node)){
                 //boolean duplicate = (rack.size() > 0 && (rack.get(nodeKey) == rack.get(rack.indexOf(nodeKey) - 1)));
-                ArrayList<Tile> newRack = (ArrayList<Tile>) rack.clone();
+                ArrayList<Tile> newRack = new ArrayList<>(rack);
                 newRack.remove(new Tile(node.getLabel()));
                 findWordsRecurse(words, newWord, newRack, cur.getChild(node), direction);
             }
