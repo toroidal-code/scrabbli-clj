@@ -123,9 +123,12 @@ public class Node extends Tile {
 
     @Override
     public boolean equals(Object o){
-        return o instanceof Node &&
-                this.terminal == ((Node)o).terminal &&
-                this.children.equals(((Node)o).children);
-
+        if (o instanceof Node){
+            Node node = (Node)o;
+            return this.terminal == node.terminal &&
+                    this.children.equals(node.children) &&
+                    super.equals(node);
+        }
+        return super.equals(o);
     }
 }

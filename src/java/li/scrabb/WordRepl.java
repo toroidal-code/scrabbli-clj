@@ -1,10 +1,7 @@
-import li.scrabb.GADDAG;
-import li.scrabb.Tile;
-import li.scrabb.WordPlay;
+package li.scrabb;
 
 import java.io.File;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class WordRepl {
 
@@ -35,15 +32,28 @@ public class WordRepl {
         Scanner scan = new Scanner(System.in);
         System.out.print("> ");
         Tile hookTile = new Tile(' ');
+        Comparator<WordPlay> comp = WordPlay.alphaComparator();
+        List<WordPlay> wordList;
         while(scan.hasNext()){
             String nextLine = scan.next();
-            if (nextLine.equals("r")){
-                String rack = scan.next();
-                Set<WordPlay> wordsInAlpha = g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), hookTile);
-                System.out.println( wordsInAlpha);
-            } else if (nextLine.equals("h")){
-                hookTile = new Tile(scan.next().toLowerCase().charAt(0));
-                System.out.println("Hook is now: " + hookTile.getValue());
+            switch (nextLine) {
+                case "r":
+                    String rack = scan.next();
+                    wordList = new ArrayList<>();
+                    wordList.addAll(g.findWordsWithRackAndHook(GADDAG.stringToTileArray(rack), hookTile));
+                    Collections.sort(wordList, comp);
+                    System.out.println(wordList);
+                    break;
+                case "h":
+                    hookTile = new Tile(scan.next().toLowerCase().charAt(0));
+                    System.out.println("Hook is now: " + hookTile.getLabel());
+                    break;
+                case "c":
+                    if (scan.next().equals("a"))
+                        comp = WordPlay.alphaComparator();
+                    else if (scan.next().equals("s"))
+                        comp = WordPlay.scoreComparator();
+                    break;
             }
             System.out.print("> ");
         }

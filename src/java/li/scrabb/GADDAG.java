@@ -2,7 +2,8 @@ package li.scrabb;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GADDAG extends Trie {
     public static Tile separatorTile = new Tile('>');
@@ -55,7 +56,7 @@ public class GADDAG extends Trie {
      * Reverse a character array in-place
      * @param chars the array to reverse
      */
-    private void reverse(char[] chars){
+    private static void reverse(char[] chars){
         if (chars != null) {
             for (int i = 0; i < chars.length / 2; i++) {
                 int temp = chars[i];
@@ -72,8 +73,8 @@ public class GADDAG extends Trie {
         return rack;
     }
 
-    public TreeSet<WordPlay> findWordsWithRackAndHook(ArrayList<Tile> rackList, Tile hook){
-        TreeSet<WordPlay> words = new TreeSet<>();
+    public Set<WordPlay> findWordsWithRackAndHook(ArrayList<Tile> rackList, Tile hook){
+        HashSet<WordPlay> words = new HashSet<>();
         Collections.sort(rackList);
         WordPlay word = new WordPlay(hook);
 
@@ -90,7 +91,7 @@ public class GADDAG extends Trie {
         return words;
     }
 
-    private void findWordsRecurseCheckBlanks(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile hook){
+    private void findWordsRecurseCheckBlanks(HashSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Tile hook){
         if (rack.contains(new Tile('_')) || hook.getLabel() == '_') {
             char[] ch = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
             ArrayList<Tile> newRack;
@@ -109,14 +110,14 @@ public class GADDAG extends Trie {
         }
     }
 
-    private void findWordsRecurse(TreeSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Node cur, boolean direction){
+    private void findWordsRecurse(HashSet<WordPlay> words, WordPlay word, ArrayList<Tile> rack, Node cur, boolean direction){
 
         //Base case
         if (cur == null)
             return;
 
         //The filtering to skip adding the separator to our li.scrabb.WordPlay word is now done in li.scrabb.WordPlay
-        if (cur != root.getChild(cur)) // if we're not a hook (cause we're already in our li.scrabb.WordPlay)
+        if (!cur.equals(root.getChild(cur))) // if we're not a hook (cause we're already in our li.scrabb.WordPlay)
             if (direction)
                 word.addLeft(cur); //add in reverse
             else
@@ -131,7 +132,7 @@ public class GADDAG extends Trie {
             newWord = new WordPlay(word); //we need to not have the 'word' object filter up scope
             if (node.getLabel() == separator)
                 findWordsRecurse(words, newWord, rack, cur.getChild(node), false);
-            else if (rack.contains(node)){
+            else if (rack.contains((Tile)node)){
                 //boolean duplicate = (rack.size() > 0 && (rack.get(nodeKey) == rack.get(rack.indexOf(nodeKey) - 1)));
                 ArrayList<Tile> newRack = (ArrayList<Tile>) rack.clone();
                 newRack.remove(new Tile(node.getLabel()));
