@@ -4,6 +4,7 @@ package li.scrabb;
 
 
 import java.lang.Iterable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -51,12 +52,21 @@ public class Trie {
         this._mem_clean_ = false;
         this.wordCount++;
     }
+
     public void add(Iterable<String> words) {
         for (String word : words)
             this.add(word);
     }
 
+    public void add(String[] words){
+        this.add(Arrays.asList(words));
+    }
 
+    /**
+     * Finds the prefix in the Trie, and returns the ending Node
+     * @param prefix the String to descend with
+     * @return the Node (or Null) that terminates the prefix in the Trie
+     */
     public Node find(String prefix) {
         Node node = this.getRoot();
         for (char c: prefix.toLowerCase().toCharArray()) {
@@ -65,9 +75,15 @@ public class Trie {
             else
                 return null;
         }
-
         return node;
     }
+
+    /**
+     * Check if the Trie contains a word (word implies terminator flag at the last character).
+     * This function uses Trie.find()
+     * @param word the String to check
+     * @return true or false
+     */
     public boolean contains(String word) {
         Node node = this.find(word);
         return node != null && node.getTerminal();

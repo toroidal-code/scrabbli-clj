@@ -8,7 +8,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Node is a subclass of Tile that is used for construction of a Trie (and thus, the li.scrabb.GADDAG). Because of this,
+ * it adds a boolean terminal (a representation of an End Of Word), and a Collection of children that reside below
+ * itself.
+ */
 public class Node extends Tile {
 
 

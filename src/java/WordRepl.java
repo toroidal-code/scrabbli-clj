@@ -1,10 +1,12 @@
+import li.scrabb.GADDAG;
 import li.scrabb.Tile;
+import li.scrabb.WordPlay;
 
 import java.io.File;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Test {
+public class WordRepl {
 
     private static final double nanosecondsToSeconds = 1000000000.;
 
@@ -18,10 +20,10 @@ public class Test {
                 g.add(dictionary.nextLine());
             }
             long duration = System.nanoTime() - startTime;
-            System.out.println("Time to build GADDAG: " + duration / nanosecondsToSeconds + " seconds"); //Nano seconds to seconds
+            System.out.println("Time to build li.scrabb.GADDAG: " + duration / nanosecondsToSeconds + " seconds"); //Nano seconds to seconds
             repl(g);
         } else {
-            g.addAll(new String[]{"Abstract", "Absolute", "Absolve", "Boats", "Bannana", "Abs"});
+            g.add(new String[]{"Abstract", "Absolute", "Absolve", "Boats", "Bannana", "Abs"});
             repl(g);
         }
     }

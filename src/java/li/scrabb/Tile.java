@@ -24,6 +24,12 @@ public class Tile implements Comparable<Tile> {
         this.value = 0; // FIXME
     }
 
+    public Tile(char label, boolean blank){
+        this(label);
+        if (blank)
+            this.value = 0;
+    }
+
     /**
      * Comparison function for Tiles
      * @param tile The tile to compare to
