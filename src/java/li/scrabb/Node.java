@@ -9,15 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Node is a subclass of Tile that is used for construction of a Trie (and thus, the li.scrabb.GADDAG). Because of this,
- * it adds a boolean terminal (a representation of an End Of Word), and a Collection of children that reside below
- * itself.
+ * Node is a subclass of Tile that is used for construction of a Trie (and thus,
+ * the li.scrabb.GADDAG). Because of this, it adds a boolean terminal (a
+ * representation of an End Of Word), and a Collection of children that reside
+ * below itself.
  */
 public class Node extends Tile {
 
 
-    private boolean terminal;  // The indicator if this Node is the end of a word
-    private HashMap<Character, Node> children; //The list of children, in HashMap form for O(1) access time
+    // The indicator if this Node is the end of a word
+    private boolean terminal;
+    //The list of children, in HashMap form for O(1) access time
+    private HashMap<Character, Node> children;
 
     /**
      * Default initializer, sets terminal to False
@@ -83,7 +86,8 @@ public class Node extends Tile {
     /**
      * Retrieve a Node
      * @param tile the Tile to use as reference
-     * @return a Node from the children Map whose label matches that of the input Tile
+     * @return a Node from the children Map whose label matches that of the
+     * input Tile
      */
     public Node getChild(Tile tile){
         return this.getChild(tile.getLabel());

@@ -5,10 +5,11 @@ package li.scrabb;
 
 /**
  * Tile is an object representation of the basic Scrabble tile. It contains a
- * character and a score value associated with it. This covers all cases, as once
- * blank tiles are played, they immediately have a character association, but no
- * score value. Before they are played, they are represented with a Tile containing '_'.
- * Tile implements Comparable to make natural ordering alphabetical.
+ * character and a score value associated with it. This covers all cases, as
+ * once blank tiles are played, they immediately have a character association,
+ * but no score value. Before they are played, they are represented with a Tile
+ * containing '_'.  Tile implements Comparable to make natural ordering
+ * alphabetical.
  */
 public class Tile implements Comparable<Tile> {
 
@@ -33,7 +34,8 @@ public class Tile implements Comparable<Tile> {
     /**
      * Comparison function for Tiles
      * @param tile The tile to compare to
-     * @return a signed integer representation of the difference between the two Tiles
+     * @return a signed integer representation of the difference between the two
+     * Tiles
      */
     @Override
     public int compareTo(Tile tile) {
